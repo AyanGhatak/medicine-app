@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -61,15 +61,54 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Dashboard"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          if (route.name === 'Dashboard') {
+            return (
+              <Ionicons
+                name={
+                  focused
+                    ? 'md-list'
+                    : 'md-list-outline'
+                }
+                size={size}
+                color={color}
+              />
+            );
+          } else if (route.name === 'DoctorAppointment') {
+            return (
+              <Ionicons
+              name={
+                focused
+                  ? 'ios-calendar'
+                  : 'ios-calendar-outline'
+              }
+                size={size}
+                color={color}
+              />
+            );
+          } else if (route.name === 'OrderMedicines') {
+            return (
+              <Ionicons
+              name={
+                focused
+                  ? 'ios-cart'
+                  : 'ios-cart-outline'
+              }
+                size={size}
+                color={color}
+              />
+            );
+          }
+        },
+        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: 'tomato',
+      })}>
       <BottomTab.Screen
         name="Dashboard"
         component={DashboardScreen}
         options={({ navigation }: RootTabScreenProps<'Dashboard'>) => ({
           title: 'Dashboard',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
@@ -90,16 +129,7 @@ function BottomTabNavigator() {
         name="DoctorAppointment"
         component={DoctorAppointment}
         options={{
-          title: 'Doctor Appointment',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name="LabAppointment"
-        component={LabAppointmentScreen}
-        options={{
-          title: 'Lab Appointment',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Schedule Appointment',
         }}
       />
       <BottomTab.Screen
@@ -107,7 +137,6 @@ function BottomTabNavigator() {
         component={OrderMedicinesScreen}
         options={{
           title: 'Order Medicines',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
     </BottomTab.Navigator>

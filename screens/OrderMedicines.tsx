@@ -6,7 +6,7 @@ import { RootTabScreenProps } from '../types';
 export default function OrderMedicinesScreen({ navigation }: RootTabScreenProps<'OrderMedicines'>) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Lab Appointment</Text>
+      <Text style={styles.title}>Order Medicines</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
     </View>
   );
