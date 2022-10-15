@@ -12,10 +12,12 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import DashboardScreen from '../screens/DashboardScreen';
+import DoctorAppointment from '../screens/DoctorAppointment';
+import LabAppointmentScreen from '../screens/LabAppointment';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import OrderMedicinesScreen from '../screens/OrderMedicines';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -58,15 +60,15 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Dashboard"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
+        name="Dashboard"
+        component={DashboardScreen}
+        options={({ navigation }: RootTabScreenProps<'Dashboard'>) => ({
+          title: 'Dashboard',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
@@ -85,10 +87,26 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="DoctorAppointment"
+        component={DoctorAppointment}
         options={{
-          title: 'Tab Two',
+          title: 'Doctor Appointment',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="LabAppointment"
+        component={LabAppointmentScreen}
+        options={{
+          title: 'Lab Appointment',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="OrderMedicines"
+        component={OrderMedicinesScreen}
+        options={{
+          title: 'Order Medicines',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
