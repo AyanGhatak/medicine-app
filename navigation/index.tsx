@@ -60,7 +60,7 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Dashboard"
+      initialRouteName="OrderMedicines"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === 'Dashboard') {
@@ -109,20 +109,6 @@ function BottomTabNavigator() {
         component={DashboardScreen}
         options={({ navigation }: RootTabScreenProps<'Dashboard'>) => ({
           title: 'Dashboard',
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
         })}
       />
       <BottomTab.Screen
@@ -135,9 +121,23 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="OrderMedicines"
         component={OrderMedicinesScreen}
-        options={{
+        options={({ navigation }: RootTabScreenProps<'OrderMedicines'>) => ({
           title: 'Order Medicines',
-        }}
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Modal')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+              <FontAwesome
+                name="shopping-cart"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
       />
     </BottomTab.Navigator>
   );

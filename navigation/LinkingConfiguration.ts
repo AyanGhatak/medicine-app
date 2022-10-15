@@ -25,6 +25,11 @@ const linking: LinkingOptions<RootStackParamList> = {
               DoctorAppointmentScreen: 'doctorAppointment',
             },
           },
+          OrderMedicines: {
+            screens: {
+              OrderMedicinesScreen: 'orderMedicines',
+            },
+          },
         },
       },
       Modal: 'modal',
