@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet, Image } from 'react-native';
-import { Button, Card, Chip, Paragraph, Text, Title } from 'react-native-paper';
+import { Button, Card, Text, Title } from 'react-native-paper';
 import { View, } from '../components/Themed';
 import MedicinesDetails from '../constants/medicinesList'
 
 
 interface MedicinesProps {
-    filter?: String
+    filter?: string
 }
 
 interface MedicineDetails {
@@ -19,11 +19,14 @@ interface MedicineDetails {
     image: string;
 }
 
+function getItems(filter: string) {
+    return MedicinesDetails.filter(e => e.name.includes(filter))
+}
+
 export default function Medicines({ filter = "" }: MedicinesProps) {
-    console.log(`Size: ${MedicinesDetails.length} and searchQuery = ${filter}`)
   return (
     <ScrollView style={styles.container}>
-        {MedicinesDetails.map((details, id) => {
+        {getItems(filter).map((details, id) => {
             return (
                 <Card key={id} style={styles.cardContainer}>
                     <Card.Content>
