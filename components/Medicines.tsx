@@ -56,14 +56,14 @@ export default function Medicines({ filter = "" }: MedicinesProps) {
 const styles = StyleSheet.create({
     container: {
         display: "flex",
-        "flex-wrap": "wrap",
-        "flex-direction": "row",
+        flexWrap: "wrap",
+        flexDirection: "row",
         overflow: 'hidden',
     },
     cardContainer: {
         margin: 10,
-        "flex-wrap": "wrap",
-        "flex-direction": "column",
+        flexWrap: "wrap",
+        flexDirection: "column",
         display: "flex",
         flex: 1,
     },
