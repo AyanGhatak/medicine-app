@@ -22,7 +22,6 @@ export interface MedicineDetails {
 }
 
 function findMatch(items: MedicineDetails[],input: string) {
-  debugger
   if (input == '') {
     return items;
   }
