@@ -452,8 +452,8 @@ export default [
     {
       "name": "Carbamide Forte Multivitamins with Probiotics Vegetarian Tablet",
       "quantity": "bottle of 60 tablets",
-      "ratings": "",
-      "ratingCount": "",
+      "ratings": 3,
+      "ratingCount": "1 ratings",
       "mrp": 375,
       "discountedPrice": 299,
       "image": "https://onemg.gumlet.io/images/c_fit,q_auto,w_150,f_auto,h_150/ic9bq5aiqabc0pooipek/carbamide-forte-multivitamins-with-probiotics-vegetarian-tablet.jpg"
@@ -461,8 +461,8 @@ export default [
     {
       "name": "Multivite Gold Daily Health Supplement Tabgels",
       "quantity": "strip of 15 soft gelatin capsules",
-      "ratings": "",
-      "ratingCount": "",
+      "ratings": 4,
+      "ratingCount": "1 ratings",
       "mrp": 264,
       "discountedPrice": 227,
       "image": "https://onemg.gumlet.io/images/c_fit,q_auto,w_150,f_auto,h_150/3391fbd09c414b9484a14f04772af87f/multivite-gold-daily-health-supplement-tabgels.jpg"

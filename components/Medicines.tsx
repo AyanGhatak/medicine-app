@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Image } from 'react-native';
 import { Button, Card, Text, Title } from 'react-native-paper';
 import { View, } from '../components/Themed';
-import MedicinesDetails from '../constants/medicinesList'
 
 
 interface MedicinesProps {
@@ -19,14 +19,33 @@ interface MedicineDetails {
     image: string;
 }
 
-function getItems(filter: string) {
-    return MedicinesDetails.filter(e => e.name.includes(filter))
+function findMatch(items: MedicineDetails[],input: string) {
+  debugger
+  if (input == '') {
+    return items;
+  }
+  var reg = new RegExp(input, "i")
+  return items.filter(function(term) {
+	  if (term.name.match(reg)) {
+  	  return term;
+	  }
+  });
 }
 
 export default function Medicines({ filter = "" }: MedicinesProps) {
+  const [items, setItems] = useState<MedicineDetails[]>([])
+
+  const fetchMedicines = async () => {
+    const response = await fetch("http://192.168.225.120:8080/medicines/")
+    const data = await response.json()
+    setItems(data)
+  }
+
+  useEffect(() => { fetchMedicines() }, [])
+
   return (
     <ScrollView style={styles.container}>
-        {getItems(filter).map((details, id) => {
+        {findMatch(items, filter).map((details, id) => {
             return (
                 <Card key={id} style={styles.cardContainer}>
                     <Card.Content>
