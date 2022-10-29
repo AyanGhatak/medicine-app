@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Image } from 'react-native';
+import { ScrollView, StyleSheet, Image, Dimensions } from 'react-native';
 import { Button, Card, Text, Title } from 'react-native-paper';
 import { View, } from '../components/Themed';
+import MedicinesList from '../constants/medicinesList'
+import { MedicineDetailsComponent } from './MedicineDetails';
 
 
 interface MedicinesProps {
     filter?: string
 }
 
-interface MedicineDetails {
+export interface MedicineDetails {
     name: string;
     quantity: string;
     ratings: number;
@@ -39,45 +41,32 @@ export default function Medicines({ filter = "" }: MedicinesProps) {
     const response = await fetch("http://192.168.225.120:8080/medicines/")
     const data = await response.json()
     setItems(data)
+    // Comment the above if you want to mock the response.
+    // setItems(MedicinesList)
   }
 
   useEffect(() => { fetchMedicines() }, [])
+  const screenHeight = Dimensions.get('window').height
 
   return (
-    <ScrollView style={styles.container}>
-        {findMatch(items, filter).map((details, id) => {
-            return (
-                <Card key={id} style={styles.cardContainer}>
-                    <Card.Content>
-                        <Title>{details.name}</Title>
-                        <View style={{display: 'flex', flexDirection: 'row'}}>
-                            <Image source={{ uri: details.image }} style={styles.img} />
-                            <View style={{backgroundColor: '#fffbfe', flex: 1, paddingLeft: 10, paddingTop: 10}}>
-                                <Text style={{textTransform: 'capitalize'}}>{details.quantity}</Text>
-                                <Text>{details.ratings} for {details.ratingCount}</Text>
-                                <Text>
-                                    <Text>MRP </Text>
-                                    <Text style={{textDecorationLine: 'line-through'}}>₹ {details.mrp}</Text>
-                                    <Text style={{color: '#1aab2a', textTransform: 'uppercase', margin: 5}}>{(((details.mrp - details.discountedPrice) / details.mrp) * 100).toFixed(1)}% OFF</Text>
-                                </Text>
-                                <Text style={{fontSize: 18}}>₹ {details.discountedPrice}</Text>
-                                <Button icon="cart" mode="text" onPress={() => console.log('Pressed')}> Add to Cart</Button>
-                            </View>
-                        </View>
-                    </Card.Content>
-                </Card>
-            )
-        })}
-    </ScrollView>
+    <View style={{height: screenHeight}}>
+      <ScrollView style={styles.container}>
+          {findMatch(items, filter).map((details, id) => {
+              return (
+                  <View style={{display: 'flex', flexDirection: 'row', backgroundColor:'#fffbfe', alignItems: 'center', margin: 10, width: '100%'}} key={id}>
+                      <Image source={{ uri: details.image }} style={styles.img} />
+                      <MedicineDetailsComponent details={details}/>
+                  </View>
+              )
+          })}
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
     container: {
         display: "flex",
-        flexWrap: "wrap",
-        flexDirection: "row",
-        overflow: 'hidden',
     },
     cardContainer: {
         margin: 10,
@@ -85,6 +74,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         display: "flex",
         flex: 1,
+        height: 40
     },
     img: {
         width: 150,
@@ -97,7 +87,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         'flex-direction': 'row',
         flex: 1,
-        backgroundColor: 'pink',
         color: 'red'
     },
 });

@@ -25,8 +25,6 @@ export default function OrderMedicinesScreen({ navigation }: RootTabScreenProps<
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
   },
   searchBar: {
     margin: 20,
