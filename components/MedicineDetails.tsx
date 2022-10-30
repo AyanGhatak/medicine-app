@@ -21,5 +21,4 @@ export function MedicineDetailsComponent({ details }: Props) {
             <Button icon="cart" mode="text" onPress={() => console.log('Pressed')}> Add to Cart</Button>
         </View>
     )
-
 }
