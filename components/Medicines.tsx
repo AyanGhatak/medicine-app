@@ -12,6 +12,7 @@ interface MedicinesProps {
 }
 
 export interface MedicineDetails {
+    id: string;
     name: string;
     quantity: string;
     ratings: number;
@@ -35,6 +36,7 @@ function findMatch(items: MedicineDetails[],input: string) {
 
 export default function Medicines({ filter = "" }: MedicinesProps) {
   const [items, setItems] = useState<MedicineDetails[]>([])
+  const [cartItems, setCartItems] = useState<String[]>([])
 
   const fetchMedicines = async () => {
     const response = await fetch("http://192.168.225.120:8080/medicines/")
