@@ -86,6 +86,10 @@ function BottomTabNavigator() {
     return <OrderMedicinesScreen {...props} addToCart={addToCart}/>
   }
 
+  function DashboardScreenWithCallbackFn(props: any) {
+    return <DashboardScreen {...props} addToCart={addToCart}/>
+  }
+
   return (
     <BottomTab.Navigator
       initialRouteName="OrderMedicines"
@@ -134,7 +138,7 @@ function BottomTabNavigator() {
       })}>
       <BottomTab.Screen
         name="Dashboard"
-        component={DashboardScreen}
+        component={DashboardScreenWithCallbackFn}
         options={({ navigation }: RootTabScreenProps<'Dashboard'>) => ({
           title: 'Dashboard',
         })}
