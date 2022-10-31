@@ -20,6 +20,9 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import OrderMedicinesScreen from '../screens/OrderMedicines';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import axios from 'axios';
+import { Badge } from 'react-native-paper';
+import { useEffect, useState } from 'react';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -57,6 +60,31 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const [cartCount, setCartCount] = useState<number>(0);
+
+  const updateCartCount = async () => {
+    const response = await fetch("http://192.168.225.120:8080/cart/1")
+    const data = await response.json()
+    setCartCount(data.length)
+  }
+
+  useEffect(() => {
+    updateCartCount();
+  }, []);
+
+  function addToCart(productId: number, quantity: number) {
+    axios.post('http://192.168.225.120:8080/cart/', {
+        userId: '1',
+        productId,
+        quantity: `${quantity}`
+    })
+      .then(updateCartCount)
+      .catch(console.log);
+  }
+
+  function OrderMedicinesWithCallbackFn(props: any) {
+    return <OrderMedicinesScreen {...props} addToCart={addToCart}/>
+  }
 
   return (
     <BottomTab.Navigator
@@ -120,7 +148,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="OrderMedicines"
-        component={OrderMedicinesScreen}
+        component={OrderMedicinesWithCallbackFn}
         options={({ navigation }: RootTabScreenProps<'OrderMedicines'>) => ({
           title: 'Order Medicines',
           headerRight: () => (
@@ -129,6 +157,7 @@ function BottomTabNavigator() {
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
+              {cartCount > 0 ? <Badge>{cartCount}</Badge> : null}
               <FontAwesome
                 name="shopping-cart"
                 size={25}

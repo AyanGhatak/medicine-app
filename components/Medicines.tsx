@@ -4,10 +4,11 @@ import { ScrollView, StyleSheet, Image, Dimensions } from 'react-native';
 import { Button, Card, Text, Title } from 'react-native-paper';
 import { View, } from '../components/Themed';
 import MedicinesList from '../constants/medicinesList'
+import type { AddToCartProps } from '../screens/OrderMedicines';
 import { MedicineDetailsComponent } from './MedicineDetails';
 
 
-interface MedicinesProps {
+interface MedicinesProps extends AddToCartProps {
     filter?: string
 }
 
@@ -34,7 +35,7 @@ function findMatch(items: MedicineDetails[],input: string) {
   });
 }
 
-export default function Medicines({ filter = "" }: MedicinesProps) {
+export default function Medicines({ filter = "", addToCart }: MedicinesProps) {
   const [items, setItems] = useState<MedicineDetails[]>([])
   const [cartItems, setCartItems] = useState<String[]>([])
 
@@ -56,7 +57,7 @@ export default function Medicines({ filter = "" }: MedicinesProps) {
               return (
                   <View style={{display: 'flex', flexDirection: 'row', backgroundColor:'#fffbfe', alignItems: 'center', margin: 10, width: '100%'}} key={id}>
                       <Image source={{ uri: details.image }} style={styles.img} />
-                      <MedicineDetailsComponent details={details}/>
+                      <MedicineDetailsComponent details={details} addToCart={addToCart}/>
                   </View>
               )
           })}

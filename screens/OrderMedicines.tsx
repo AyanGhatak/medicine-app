@@ -6,7 +6,11 @@ import Medicines from '../components/Medicines';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 
-export default function OrderMedicinesScreen({ navigation }: RootTabScreenProps<'OrderMedicines'>) {
+export interface AddToCartProps {
+  addToCart: (productId: string, quantity: number) => void
+}
+
+export default function OrderMedicinesScreen({ navigation, addToCart }: RootTabScreenProps<'OrderMedicines'> & AddToCartProps) {
   const [searchQuery, setSearchQuery] = React.useState('');
 
   const onChangeSearch = (query: string) => setSearchQuery(query);
@@ -18,7 +22,7 @@ export default function OrderMedicinesScreen({ navigation }: RootTabScreenProps<
         value={searchQuery}
         style={styles.searchBar}
       />
-      <Medicines filter={searchQuery} />
+      <Medicines filter={searchQuery} addToCart={addToCart}/>
     </View>
   );
 }
