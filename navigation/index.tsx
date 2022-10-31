@@ -70,7 +70,7 @@ function BottomTabNavigator() {
 
   useEffect(() => {
     updateCartCount();
-  }, []);
+  });
 
   function addToCart(productId: number, quantity: number) {
     axios.post('http://192.168.225.120:8080/cart/', {

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Dimensions, ScrollView, View, StyleSheet, Image } from "react-native";
 import { Button, Text, TextInput } from 'react-native-paper';
 import { CartDetails } from "./CartDetails";
+import axios from "axios";
 
 export interface CartItemDetails {
   id: string;
@@ -17,6 +18,18 @@ export default function Cart() {
   const [cartItems, setCartItems] = useState<CartItemDetails[]>([]);
   const [addresses, setAddresses] = useState<string>("");
   const [total, setTotal] = useState<number>(0)
+
+   function submitOrder() {
+    axios.post("http://192.168.225.120:8080/orders/", {
+        "details": cartItems.map(({productId, quantity, price}) => ({productId, quantity, price})),
+        "info": {
+            "userId": 1,
+            "address": addresses
+        }
+    }).then(() => {
+      setCartItems([])
+    }).catch(console.log);
+  }
 
   const fetchCartItems = async () => {
     const response = await fetch("http://192.168.225.120:8080/cart/1")
@@ -36,7 +49,8 @@ export default function Cart() {
   const screenHeight = Dimensions.get('window').height
 
   return (
-    <View style={{height: screenHeight}}>
+    <>
+    {cartItems.length > 0 ? <View style={{height: screenHeight}}>
       <ScrollView style={styles.container}>
         <Text variant="titleLarge" style={{paddingHorizontal: 20}}>Items:</Text>
           {cartItems.map((details, id) => {
@@ -60,7 +74,7 @@ export default function Cart() {
             onChangeText={text => setAddresses(text)}
           />
 
-          <Button style={{margin: 10}} mode="contained" onPress={() => console.log('Pressed')}>
+          <Button style={{margin: 10}} mode="contained" onPress={submitOrder}>
               <FontAwesome
                 name="shopping-cart"
                 size={25}
@@ -70,7 +84,14 @@ export default function Cart() {
           </Button>
             
       </ScrollView>
+    </View> : 
+    <View style={{display: 'flex', alignItems: 'center'}}>
+      <Text variant="titleLarge" style={{margin: 30}}>
+        Your cart is empty!
+      </Text>
     </View>
+  }
+    </>
   );
 }
 
