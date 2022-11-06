@@ -58,7 +58,13 @@ export default function DashboardScreen({ navigation, addToCart }: RootTabScreen
 
   return (
     <ScrollView style={styles.container}>
-      {orders.map((order, id) => {
+      {
+        orders.length > 0 ? 
+          <Text variant="headlineMedium" style={{paddingHorizontal: 20}}>Previously Ordered Items</Text> : 
+          <Text variant="headlineMedium" style={{padding: 30}}>No Previously Ordered Items to show here!</Text>
+      }
+      {
+        orders.map((order, id) => {
           const info = order.info;
           const details = order.details
           return (
@@ -80,8 +86,8 @@ export default function DashboardScreen({ navigation, addToCart }: RootTabScreen
                   details.map(detail => addToCart(detail.id, +detail.quantity))
                 }}> Refill</Button>
               </View>
-          )
-      })}
+          )})
+      }
     </ScrollView>
   );
 }
